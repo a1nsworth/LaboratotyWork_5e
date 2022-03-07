@@ -82,25 +82,27 @@ char *copy(const char *beginSource, const char *endSource, char *beginDestinatio
 
     memcpy(beginDestination, beginSource, (beginSource - endSource) * sizeof(char));
 
-    return beginDestination++;
+    return beginDestination + 1;
 }
 
-char *copyIf(const char *beginSource, const char *endSource, char *beginDestination, int (*condition)(const int)) {
+char *copyIf(const char *beginSource, const char *endSource, char *beginDestination, bool (*condition)(const int)) {
     printExitIfNullptr(beginDestination);
 
     while (beginSource++ != endSource)
         if (condition(*beginSource))
             *beginDestination++ = *beginSource;
-    return beginDestination++;
+    return ++beginDestination + 1;
 }
 
 char *
-copyIfReverse(const char *rbeginSource, const char *rendSource, char *beginDestination, int (*condition)(const int)) {
+copyIfReverse(const char *rbeginSource, const char *rendSource, char *beginDestination, bool (*condition)(const int)) {
     printExitIfNullptr(beginDestination);
 
     while (rbeginSource-- != rendSource)
         if (condition(*rbeginSource))
             *beginDestination++ = *rbeginSource;
-    return beginDestination++;
+    return beginDestination + 1;
 }
+
+
 

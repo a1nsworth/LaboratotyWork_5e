@@ -10,6 +10,8 @@
 #include <memory.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <assert.h>
+#include <stdbool.h>
 
 void printExitIfNullptr(const void *ptr);
 
@@ -29,9 +31,9 @@ int strcmp_(const char *lhs, const char *rhs);
 
 char *copy(const char *beginSource, const char *endSource, char *beginDestination);
 
-char *copyIf(const char *beginSource, const char *endSource, char *beginDestination, int (*condition)(int));
+char *copyIf(const char *beginSource, const char *endSource, char *beginDestination, bool (*condition)(int));
 
 char *
-copyIfReverse(const char *rbeginSource, const char *rendSource, char *beginDestination, int (*condition)(int));
+copyIfReverse(const char *rbeginSource, const char *rendSource, char *beginDestination, bool (*condition)(int));
 
 #endif //LABA5E_STRING__H
