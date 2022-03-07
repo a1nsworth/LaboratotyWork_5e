@@ -92,4 +92,24 @@ char *copy(const char *beginSource, const char *endSource, char *beginDestinatio
     return beginDestination++;
 }
 
+char *copyIf(const char *beginSource, const char *endSource, char *beginDestination, int (*condition)(const int)) {
+    printExitIfNullptr(beginDestination);
+
+    while (beginSource++ != endSource)
+        if (condition(*beginSource))
+            *beginDestination++ = *beginSource;
+    return beginDestination++;
+}
+
+char *
+copyIfReverse(const char *rbeginSource, const char *rendSource, char *beginDestination, int (*condition)(const int)) {
+    printExitIfNullptr(beginDestination);
+
+    while (rbeginSource-- != rendSource)
+        if (condition(*rbeginSource))
+            *beginDestination++ = *rbeginSource;
+    return beginDestination++;
+}
+
+
 #endif //LABA5E_STRING__H
