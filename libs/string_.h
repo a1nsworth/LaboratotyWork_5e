@@ -71,5 +71,17 @@ char *findSpaceReverse(const char *rbegin, const char *rend) {
     return rend;
 }
 
+int strcmp_(const char *lhs, const char *rhs) {
+    printExitIfNullptr(lhs);
+    printExitIfNullptr(rhs);
+
+    for (; *lhs != '\0' || *rhs != '\0'; lhs++, rhs++) {
+        int differenceAddress = lhs - rhs;
+        if (differenceAddress != 0)
+            return differenceAddress;
+    }
+
+    return 0;
+}
 
 #endif //LABA5E_STRING__H
