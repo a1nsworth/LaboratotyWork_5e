@@ -27,7 +27,7 @@ size_t strlen_(const char *begin) {
     return end - begin;
 }
 
-char *find(char *begin, const char *const end, const int ch) {
+char *find(const char *begin, const char *const end, const int ch) {
     printExitIfNullptr(begin);
 
     while (begin != end && *begin != ch)
@@ -35,7 +35,7 @@ char *find(char *begin, const char *const end, const int ch) {
     return begin;
 }
 
-char *findNonSpace(char *begin) {
+char *findNonSpace(const char *begin) {
     printExitIfNullptr(begin);
 
     while (*begin++ != '\0')
@@ -44,7 +44,7 @@ char *findNonSpace(char *begin) {
     return begin;
 }
 
-char *findSpace(char *begin) {
+char *findSpace(const char *begin) {
     printExitIfNullptr(begin);
 
     while (*begin++ != '\0')
@@ -53,10 +53,21 @@ char *findSpace(char *begin) {
     return begin;
 }
 
-char *findNonSpaceReverse(char *rbegin, const char *rend) {
+char *findNonSpaceReverse(const char *rbegin, const char *rend) {
     printExitIfNullptr(rbegin);
-    while (rbegin != rend)
 
+    while (rbegin-- != rend)
+        if (!isspace(*rbegin))
+            return rbegin;
+    return rend;
+}
+
+char *findSpaceReverse(const char *rbegin, const char *rend) {
+    printExitIfNullptr(rbegin);
+
+    while (rbegin-- != rend)
+        if (isspace(*rbegin))
+            return rbegin;
     return rend;
 }
 
