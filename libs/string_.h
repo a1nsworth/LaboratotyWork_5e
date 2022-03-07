@@ -84,4 +84,12 @@ int strcmp_(const char *lhs, const char *rhs) {
     return 0;
 }
 
+char *copy(const char *beginSource, const char *endSource, char *beginDestination) {
+    printExitIfNullptr(beginDestination);
+
+    memcpy(beginDestination, beginSource, (beginSource - endSource) * sizeof(char));
+
+    return beginDestination++;
+}
+
 #endif //LABA5E_STRING__H
