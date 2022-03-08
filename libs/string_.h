@@ -16,7 +16,7 @@
 #define MAX_STRING_SIZE 100
 #define MAX_N_WORDS_IN_STRING 100
 #define MAX_WORD_SIZE 20
-char _stringBuffer [ MAX_STRING_SIZE + 1];
+char _stringBuffer[MAX_STRING_SIZE + 1];
 
 typedef struct WordDescriptor {
     char *begin;
@@ -51,5 +51,24 @@ bool getWord(char *beginSearch, WordDescriptor *word);
 bool getWordReverse(char *rbegin, char *rend, WordDescriptor *word);
 
 char *getEndOfString(char *begin);
+
+char *searchWordInSource(char *source, char *word) {
+    while (*source++ != '\0') {
+        if (!(*source - *word)) {
+            bool isFound = true;
+            char *beginSource = source;
+            char *beginWord = word;
+            while (*beginWord && isFound) {
+                isFound = *beginWord == *beginSource;
+                beginWord++;
+                beginSource++;
+            }
+
+            if (isFound)
+                return source;
+        }
+    }
+    return source;
+}
 
 #endif //LABA5E_STRING__H
