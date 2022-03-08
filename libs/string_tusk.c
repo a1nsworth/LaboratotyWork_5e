@@ -112,3 +112,67 @@ void getBagOfWords(BagOfWords *bag, char *s) {
         beginSearch = word.end;
     }
 }
+
+size_t countPalindromes(char *s) {
+    unsigned counterPal = 0;
+    char *begin = s;
+    size_t len = strlen_(s);
+    WordDescriptor word;
+    char *end;
+    while (*(end = find(begin, s + len, ',')) != '\0') {
+        getWordReverse(begin - 1, end - 1, &word);
+        counterPal += isPalindrome(word);
+        begin = end + 1;
+    }
+    getWordReverse(begin - 1, end - 1, &word);
+    counterPal += isPalindrome(word);
+
+    return counterPal;
+}
+
+void getAlternatingWordLines(char *s1, char *s2, char *mergeS1S2) {
+    WordDescriptor w1, w2;
+    bool isW1found, isW2found;
+    char* beginSearch1 = s1;
+    char* beginSearch2 = s2;
+    char* dst = mergeS1S2;
+    while ((isW1found = getWord(beginSearch1, &w1)),
+            (isW2found = getWord(beginSearch2, &w2)),
+            isW1found || isW2found) {
+        if (isW1found) {
+            dst = copy(w1.begin, w1.end, dst);
+            *dst++ = ' ';
+            beginSearch1 = w1.end;
+        }
+        if (isW2found) {
+            dst = copy(w2.begin, w2.end, dst);
+            *dst++ = ' ';
+            beginSearch2 = w2.end;
+        }
+    }
+    *(dst - (dst != mergeS1S2)) = '\0';
+}
+
+void reverseWordsOrder(char *s) {
+    char *rbegin = s + strlen_(s) - 1;
+    char *rend = s - 1;
+    char *beginDst = _stringBuffer;
+    WordDescriptor word;
+    while (getWordReverse(rend, rbegin, &word)) {
+        beginDst = copy(word.begin, word.end, beginDst);
+        *beginDst++ = ' ';
+        rbegin = word.begin - 1;
+    }
+
+    *copy(_stringBuffer, beginDst - (beginDst != _stringBuffer), s) = '\0';
+}
+
+void digitToStartForEveryWord(char *s) {
+    char *beginSearch = s;
+    WordDescriptor word;
+    while (getWord(beginSearch, &word)) {
+        digitToStartWithoutChangeOrder(word);
+
+        beginSearch = word.end;
+    }
+}

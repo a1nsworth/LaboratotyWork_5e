@@ -23,6 +23,8 @@ void digitToStart(WordDescriptor word);
 // Задание 3.1
 void digitToStartWithoutChangeOrder(WordDescriptor word);
 
+void digitToStartForEveryWord(char *s);
+
 // Задание 4
 void replaceDigitsByEqualSpaces(char *s);
 
@@ -36,21 +38,12 @@ bool isWordsOrdered(char *s);
 void getBagOfWords(BagOfWords *bag, char *s);
 
 // Задание 8
-size_t countPalindromes(char *s) {
-    unsigned counterPal = 0;
-    char *begin = s;
-    size_t len = strlen_(s);
-    WordDescriptor word;
-    char *end;
-    while (*(end = find(begin, s + len, ',')) != '\0') {
-        getWordReverse(begin - 1, end - 1, &word);
-        counterPal += isPalindrome(word);
-        begin = end + 1;
-    }
-    getWordReverse(begin - 1, end - 1, &word);
-    counterPal += isPalindrome(word);
+size_t countPalindromes(char *s);
 
-    return counterPal;
-}
+// Задание 9
+void getAlternatingWordLines(char *s1, char *s2, char *mergeS1S2);
+
+// Задание 10
+void reverseWordsOrder(char *s);
 
 #endif //LABA5E_STRING_TUSK_H
