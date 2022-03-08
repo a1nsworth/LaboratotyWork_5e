@@ -18,6 +18,22 @@ void removeSpaces(char *s) {
 }
 
 // Задание 2
+void removeExtraSpaces(char *s) {
+    printExitIfNullptr(s);
 
+    register char *iRead = s;
+    char *iWrite = s;
+    char lastVal = *iRead;
+    while (*iRead != '\0') {
+        if (*iRead != lastVal || !isspace(lastVal)) {
+            *iWrite = *iRead;
+            iWrite++;
+        }
+        lastVal = *iRead++;
+    }
+
+    iWrite = isspace(lastVal) ? iWrite - 1 : iWrite;
+    *iWrite = '\0';
+}
 
 #endif //LABA5E_STRING_TUSK_H
