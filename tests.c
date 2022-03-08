@@ -4,7 +4,7 @@
 __FILE__ , __FUNCTION__ , __LINE__ )
 
 void assertString(char *expected, char *got,
-                  char const *fileName, char *funcName,
+                  const char *const fileName, const char *const funcName,
                   int line) {
     int x = strcmp__(expected, got);
     if (x) {
