@@ -13,6 +13,11 @@
 #include <assert.h>
 #include <stdbool.h>
 
+typedef struct WordDescriptor {
+    char *begin;
+    char *end;
+} WordDescriptor;
+
 void printExitIfNullptr(const void *ptr);
 
 size_t strlen_(const char *begin);
@@ -35,5 +40,7 @@ char *copyIf(const char *beginSource, const char *endSource, char *beginDestinat
 
 char *
 copyIfReverse(const char *rbeginSource, const char *rendSource, char *beginDestination, bool (*condition)(int));
+
+bool getWord(char *beginSearch, WordDescriptor *word);
 
 #endif //LABA5E_STRING__H
