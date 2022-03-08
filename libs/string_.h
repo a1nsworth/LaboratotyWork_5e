@@ -48,4 +48,6 @@ copyIfReverse(const char *rbeginSource, const char *rendSource, char *beginDesti
 
 bool getWord(char *beginSearch, WordDescriptor *word);
 
+bool getWordReverse(char *rbegin, char *rend, WordDescriptor *word);
+
 #endif //LABA5E_STRING__H
