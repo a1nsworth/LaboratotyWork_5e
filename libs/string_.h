@@ -61,5 +61,6 @@ char *searchWordInSource(char *source, char *word);
 
 int areWordsEqual(WordDescriptor w1, WordDescriptor w2);
 
+bool isPalindrome(WordDescriptor word);
 
 #endif //LABA5E_STRING__H

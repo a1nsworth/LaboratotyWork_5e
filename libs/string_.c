@@ -159,5 +159,18 @@ int areWordsEqual(WordDescriptor w1, WordDescriptor w2) {
     return *beginW1 - *beginW2;
 }
 
+bool isPalindrome(WordDescriptor word) {
+    word.end--;
+    while (word.begin < word.end) {
+        if (*word.begin != *word.end)
+            return false;
+
+        word.begin++;
+        word.end--;
+    }
+
+    return true;
+}
+
 
 

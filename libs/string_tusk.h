@@ -35,4 +35,22 @@ bool isWordsOrdered(char *s);
 // Задание 7
 void getBagOfWords(BagOfWords *bag, char *s);
 
+// Задание 8
+size_t countPalindromes(char *s) {
+    unsigned counterPal = 0;
+    char *begin = s;
+    size_t len = strlen_(s);
+    WordDescriptor word;
+    char *end;
+    while (*(end = find(begin, s + len, ',')) != '\0') {
+        getWordReverse(begin - 1, end - 1, &word);
+        counterPal += isPalindrome(word);
+        begin = end + 1;
+    }
+    getWordReverse(begin - 1, end - 1, &word);
+    counterPal += isPalindrome(word);
+
+    return counterPal;
+}
+
 #endif //LABA5E_STRING_TUSK_H
