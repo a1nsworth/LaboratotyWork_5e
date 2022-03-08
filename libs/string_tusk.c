@@ -53,3 +53,62 @@ void replaceDigitsByEqualSpaces(char *s) {
     }
     *s = '\0';
 }
+
+void replace(char *source, char *w1, char *w2) {
+    size_t w1Size = strlen_(w1);
+    size_t w2Size = strlen_(w2);
+    WordDescriptor word1 = {w1, w1 + w1Size};
+    WordDescriptor word2 = {w2, w2 + w2Size};
+
+    char *pRead, *pWrite;
+    if (w1Size >= w2Size) {
+        pRead = source;
+        pWrite = source;
+    } else {
+        *copy(source, getEndOfString(source), _stringBuffer) = '\0';
+        pRead = _stringBuffer;
+        pWrite = source;
+    }
+
+    while (*pRead != '\0') {
+        char *beginWord = searchWordInSource(pRead, word1.begin);
+        pWrite = copy(pRead, beginWord, pWrite);
+        pRead = beginWord + w1Size;
+        if (*beginWord == '\0') {
+            *pWrite = '\0';
+            return;
+        }
+        memcpy(pWrite, word2.begin, w2Size);
+
+        pWrite += w2Size;
+    }
+    *pWrite = '\0';
+}
+
+bool isWordsOrdered(char *s) {
+    char *begin = s;
+    WordDescriptor currentWord;
+    if (!getWord(begin, &currentWord))
+        return true;
+
+    WordDescriptor lastWord = currentWord;
+    begin = lastWord.end;
+    while (getWord(begin, &currentWord)) {
+        if (areWordsEqual(currentWord, lastWord) < 0)
+            return false;
+        lastWord = currentWord;
+        begin = currentWord.end;
+    }
+    return true;
+}
+
+void getBagOfWords(BagOfWords *bag, char *s) {
+    char *beginSearch = s;
+    bag->size = 0;
+    WordDescriptor word;
+    while (getWord(beginSearch, &word)) {
+        bag->words[bag->size] = word;
+        bag->size++;
+        beginSearch = word.end;
+    }
+}

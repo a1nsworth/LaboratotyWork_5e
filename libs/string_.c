@@ -148,5 +148,16 @@ char *searchWordInSource(char *source, char *word) {
     return source;
 }
 
+int areWordsEqual(WordDescriptor w1, WordDescriptor w2) {
+    char *beginW1 = w1.begin;
+    char *beginW2 = w2.begin;
+    while (*beginW1 == *beginW2 && beginW1 != w1.end - 1) {
+        beginW1++;
+        beginW2++;
+    }
+
+    return *beginW1 - *beginW2;
+}
+
 
 

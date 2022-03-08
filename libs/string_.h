@@ -23,6 +23,11 @@ typedef struct WordDescriptor {
     char *end;
 } WordDescriptor;
 
+typedef struct BagOfWords {
+    WordDescriptor words[MAX_N_WORDS_IN_STRING];
+    size_t size;
+} BagOfWords;
+
 void printExitIfNullptr(const void *ptr);
 
 size_t strlen_(const char *begin);
@@ -54,16 +59,7 @@ char *getEndOfString(char *begin);
 
 char *searchWordInSource(char *source, char *word);
 
-int areWordsEqual(WordDescriptor w1, WordDescriptor w2) {
-    char *beginW1 = w1.begin;
-    char *beginW2 = w2.begin;
-    while (*beginW1 == *beginW2 && beginW1 != w1.end - 1) {
-        beginW1++;
-        beginW2++;
-    }
-
-    return *beginW1 - *beginW2;
-}
+int areWordsEqual(WordDescriptor w1, WordDescriptor w2);
 
 
 #endif //LABA5E_STRING__H
