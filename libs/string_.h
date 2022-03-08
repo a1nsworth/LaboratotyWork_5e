@@ -16,7 +16,7 @@
 #define MAX_STRING_SIZE 100
 #define MAX_N_WORDS_IN_STRING 100
 #define MAX_WORD_SIZE 20
-char _stringBuffer[MAX_STRING_SIZE + 1];
+char stringBuffer[MAX_STRING_SIZE + 1];
 
 typedef struct WordDescriptor {
     char *begin;
@@ -28,28 +28,28 @@ typedef struct BagOfWords {
     size_t size;
 } BagOfWords;
 
-void printExitIfNullptr(const void *ptr);
+void printExitIfNullptr(void *ptr);
 
-size_t strlen_(const char *begin);
+size_t strlen_(char *begin);
 
-char *find(const char *begin, const char *const end, int ch);
+char *find(char *begin, char *end, int ch);
 
-char *findNonSpace(const char *begin);
+char *findNonSpace(char *begin);
 
-char *findSpace(const char *begin);
+char *findSpace(char *begin);
 
-char *findNonSpaceReverse(const char *rbegin, const char *rend);
+char *findNonSpaceReverse(char *rbegin, char *rend);
 
-char *findSpaceReverse(const char *rbegin, const char *rend);
+char *findSpaceReverse(char *rbegin, char *rend);
 
-int strcmp_(const char *lhs, const char *rhs);
+int strcmp__(char *lhs, char *rhs);
 
-char *copy(const char *beginSource, const char *endSource, char *beginDestination);
+char *copy(char *beginSource, char *endSource, char *beginDestination);
 
-char *copyIf(const char *beginSource, const char *endSource, char *beginDestination, int (*condition)(int));
+char *copyIf(char *beginSource, char *endSource, char *beginDestination, int (*condition)(int));
 
 char *
-copyIfReverse(const char *rbeginSource, const char *rendSource, char *beginDestination, int (*condition)(int));
+copyIfReverse(char *rbeginSource, char *rendSource, char *beginDestination, int (*condition)(int));
 
 bool getWord(char *beginSearch, WordDescriptor *word);
 

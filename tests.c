@@ -3,10 +3,10 @@
 #define ASSERT_STRING(expected, got) assertString(expected, got, \
 __FILE__ , __FUNCTION__ , __LINE__ )
 
-void assertString(const char *expected, char *got,
-                  char const *fileName, char const *funcName,
+void assertString(char *expected, char *got,
+                  char const *fileName, char *funcName,
                   int line) {
-    int x = strcmp_(expected, got);
+    int x = strcmp__(expected, got);
     if (x) {
         fprintf(stderr, " File %s\n", fileName);
         fprintf(stderr, "%s - failed on line %d\n", funcName, line);
@@ -15,6 +15,7 @@ void assertString(const char *expected, char *got,
     } else
         fprintf(stderr, "%s - OK\n", funcName);
 }
+
 
 void test_strlen_zeroLen() {
     // Arrange
@@ -58,6 +59,13 @@ void test_strlen_oneElem() {
 
     // Assert
     assert(len == 1);
+}
+
+void test_strlen() {
+    test_strlen_zeroLen();
+    test_strlen_allLen();
+    test_strlen_largeLen();
+    test_strlen_oneElem();
 }
 
 void test_removeExtraSpaces_spacesBetweenBeforeAfterWords() {
@@ -106,70 +114,252 @@ void test_removeExtraSpaces() {
 
 }
 
-void test_digitToStartWithoutChangeOrder_digitsInEnd() {
+void test_digitToStartForEveryWord_digitsInEnd() {
     char s[] = "ABC123  FCF312";
-    digitToStartWithoutChangeOrder(s);
+    digitToStartForEveryWord(s);
     ASSERT_STRING("123ABC  312FCF", s);
 }
 
-void test_digitToStartWithoutChangeOrder_digitsInWord() {
+void test_digitToStartForEveryWord_digitsInWord() {
     char s[] = "A3B2C1       F42C42F42";
-    digitToStartWithoutChangeOrder(s);
+    digitToStartForEveryWord(s);
     ASSERT_STRING("321ABC       424242FCF", s);
 }
 
-void test_digitToStartWithoutChangeOrder_digitsInStart() {
+void test_digitToStartForEveryWord_digitsInStart() {
     char s[] = "321ABC       424242FCF";
-    digitToStartWithoutChangeOrder(s);
+    digitToStartForEveryWord(s);
     ASSERT_STRING("321ABC       424242FCF", s);
 }
 
-void test_digitToStartWithoutChangeOrder_noDigits() {
+void test_digitToStartForEveryWord_noDigits() {
     char s[] = "ABC FCF";
-    digitToStartWithoutChangeOrder(s);
+    digitToStartForEveryWord(s);
     ASSERT_STRING("ABC FCF", s);
 }
 
-void test_digitToStartWithoutChangeOrder_noLetters() {
+void test_digitToStartForEveryWord_noLetters() {
     char s[] = "123 4 56";
-    digitToStartWithoutChangeOrder(s);
+    digitToStartForEveryWord(s);
     ASSERT_STRING("123 4 56", s);
 }
 
-void test_digitToStartWithoutChangeOrder_allSpaces() {
+void test_digitToStartForEveryWord_allSpaces() {
     char s[] = "\n   \t \n";
-    digitToStartWithoutChangeOrder(s);
+    digitToStartForEveryWord(s);
     ASSERT_STRING("\n   \t \n", s);
 }
 
-void test_digitToStartWithoutChangeOrder_emptyString() {
+void test_digitToStartForEveryWord_emptyString() {
     char s[] = "";
-    digitToStartWithoutChangeOrder(s);
+    digitToStartForEveryWord(s);
     ASSERT_STRING("", s);
 }
 
-void test_digitToStartWithoutChangeOrder() {
-    test_digitToStartWithoutChangeOrder_digitsInEnd();
-    test_digitToStartWithoutChangeOrder_digitsInWord();
-    test_digitToStartWithoutChangeOrder_digitsInStart();
-    test_digitToStartWithoutChangeOrder_noDigits();
-    test_digitToStartWithoutChangeOrder_noLetters();
-    test_digitToStartWithoutChangeOrder_allSpaces();
-    test_digitToStartWithoutChangeOrder_emptyString();
+void test_digitToStartForEveryWord() {
+    test_digitToStartForEveryWord_digitsInEnd();
+    test_digitToStartForEveryWord_digitsInWord();
+    test_digitToStartForEveryWord_digitsInStart();
+    test_digitToStartForEveryWord_noDigits();
+    test_digitToStartForEveryWord_noLetters();
+    test_digitToStartForEveryWord_allSpaces();
+    test_digitToStartForEveryWord_emptyString();
 
 }
 
+void test_replaceDigitsByEqualSpaces_figuresInWord() {
+    char s[MAX_STRING_SIZE] = "A3B0C1";
+    replaceDigitsByEqualSpaces(s);
+    ASSERT_STRING("A   BC ", s);
+}
 
+void test_replaceDigitsByEqualSpaces_AfterBeforeWord() {
+    char s[MAX_STRING_SIZE] = "4A3B12E0C1\t";
+    replaceDigitsByEqualSpaces(s);
+    ASSERT_STRING("    A   B   EC \t", s);
+}
 
-void test_string_() {
-    test_strlen_zeroLen();
-    test_strlen_allLen();
-    test_strlen_largeLen();
-    test_strlen_oneElem();
+void test_replaceDigitsByEqualSpaces_noFigures() {
+    char s[MAX_STRING_SIZE] = "ABEC";
+    replaceDigitsByEqualSpaces(s);
+    ASSERT_STRING("ABEC", s);
+}
+
+void test_replaceDigitsByEqualSpaces_noLetters() {
+    char s[MAX_STRING_SIZE] = "1234";
+    replaceDigitsByEqualSpaces(s);
+    ASSERT_STRING("          ", s);
+}
+
+void test_replaceDigitsByEqualSpaces_emptyString() {
+    char s[MAX_STRING_SIZE] = "";
+    replaceDigitsByEqualSpaces(s);
+    ASSERT_STRING("", s);
+}
+
+void test_replaceDigitsByEqualSpaces() {
+    test_replaceDigitsByEqualSpaces_figuresInWord();
+    test_replaceDigitsByEqualSpaces_AfterBeforeWord();
+    test_replaceDigitsByEqualSpaces_noFigures();
+    test_replaceDigitsByEqualSpaces_noLetters();
+    test_replaceDigitsByEqualSpaces_emptyString();
+}
+
+void test_isWordsOrdered_oneLetterOrdered() {
+    char s[] = "a b c d e";
+    assert(isWordsOrdered(s));
+}
+
+void test_isWordsOrdered_oneLetterUnordered() {
+    char s[] = "a b a d e";
+    assert(!isWordsOrdered(s));
+}
+
+void test_isWordsOrdered_ordered() {
+    char s[] = "c c++ java javaScript python ruby";
+    assert(isWordsOrdered(s));
+}
+
+void test_isWordsOrdered_unorderedLastLetterAreDifferent() {
+    char s[] = "bananz bananf";
+    assert(!isWordsOrdered(s));
+}
+
+void test_isWordsOrdered_orderedLastLetterAreDifferent() {
+    char s[] = "bananf bananz";
+    assert(isWordsOrdered(s));
+}
+
+void test_isWordsOrdered_oneWord() {
+    char s[] = "banana banana";
+    assert(isWordsOrdered(s));
+}
+
+void test_isWordsOrdered_emptyString() {
+    char s[] = "";
+    assert(isWordsOrdered(s));
+}
+
+void test_isWordsOrdered() {
+    test_isWordsOrdered_unorderedLastLetterAreDifferent();
+    test_isWordsOrdered_oneLetterOrdered();
+    test_isWordsOrdered_oneLetterUnordered();
+    test_isWordsOrdered_ordered();
+    test_isWordsOrdered_orderedLastLetterAreDifferent();
+    test_isWordsOrdered_oneWord();
+    test_isWordsOrdered_emptyString();
+}
+
+void test_countPalindromes_hasPalindromes() {
+    char s[] = "radar, tot, noon, redder, stats, apple, poop";
+    assert(countPalindromes(s) == 6);
+}
+
+void test_countPalindromes_oneWord() {
+    char s[] = "radar";
+    assert(countPalindromes(s) == 1);
+}
+
+void test_countPalindromes_noSpaces() {
+    char s[] = "radar,tot,noon,redder,stats,apple,poop";
+    assert(countPalindromes(s) == 6);
+}
+
+void test_countPalindromes_oneLetter() {
+    char s[] = "a,b,c,d,e,f,g";
+    assert(countPalindromes(s) == 7);
+}
+
+void test_countPalindromes() {
+    test_countPalindromes_hasPalindromes();
+    test_countPalindromes_noSpaces();
+    test_countPalindromes_oneLetter();
+    test_countPalindromes_oneWord();
+}
+
+void test_getAlternatingWordLines_equalWordCount() {
+    char s[MAX_STRING_SIZE];
+    getAlternatingWordLines(s, "Hello World", "Wow Beautiful");
+    ASSERT_STRING("Hello Wow World Beautiful", s);
+}
+
+void test_getAlternatingWordLines_moreWordInFirstString() {
+    char s[MAX_STRING_SIZE];
+    getAlternatingWordLines(s, "Hello World Beautiful", "Wow");
+    ASSERT_STRING("Hello Wow World Beautiful", s);
+}
+
+void test_getAlternatingWordLines_moreWordInSecondString() {
+    char s[MAX_STRING_SIZE];
+    getAlternatingWordLines(s, "Wow", "Hello World Beautiful");
+    ASSERT_STRING("Wow Hello World Beautiful", s);
+}
+
+void test_getAlternatingWordLines_firstStringIsEmpty() {
+    char s[MAX_STRING_SIZE];
+    getAlternatingWordLines(s, "", "Hello World Beautiful");
+    ASSERT_STRING("Hello World Beautiful", s);
+}
+
+void test_getAlternatingWordLines_secondStringIsEmpty() {
+    char s[MAX_STRING_SIZE];
+    getAlternatingWordLines(s, "Hello World Beautiful", "");
+    ASSERT_STRING("Hello World Beautiful", s);
+}
+
+void test_getAlternatingWordLines_stringsAreEmpty() {
+    char s[MAX_STRING_SIZE];
+    getAlternatingWordLines(s, " ", " ");
+    ASSERT_STRING("", s);
+}
+
+void test_getAlternatingWordLines() {
+    test_getAlternatingWordLines_equalWordCount();
+    test_getAlternatingWordLines_moreWordInFirstString();
+    test_getAlternatingWordLines_moreWordInSecondString();
+    test_getAlternatingWordLines_firstStringIsEmpty();
+    test_getAlternatingWordLines_secondStringIsEmpty();
+    test_getAlternatingWordLines_stringsAreEmpty();
+}
+
+void test_reverseWordsOrder_empty() {
+    char str[] = "";
+    reverseWordsOrder(str);
+    ASSERT_STRING("", str);
+}
+
+void test_reverseWordsOrder_oneWord() {
+    char str[] = "asd";
+    reverseWordsOrder(str);
+    ASSERT_STRING("asd", str);
+}
+
+void test_reverseWordsOrder_someWords() {
+    char str[] = "death   is  near";
+    reverseWordsOrder(str);
+    ASSERT_STRING("near is death", str);
+}
+
+void test_reverseWordsOrder() {
+    test_reverseWordsOrder_empty();
+    test_reverseWordsOrder_oneWord();
+    test_reverseWordsOrder_someWords();
+}
+
+void test_string() {
+    test_strlen();
+    test_removeExtraSpaces();
+    test_digitToStartForEveryWord();
+    test_replaceDigitsByEqualSpaces();
+    test_replaceDigitsByEqualSpaces();
+    test_isWordsOrdered();
+    test_countPalindromes();
+    test_getAlternatingWordLines();
+    test_reverseWordsOrder();
 }
 
 int main() {
-    test_string_();
+    test_string();
 
     return 0;
 }

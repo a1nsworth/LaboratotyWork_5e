@@ -4,14 +4,14 @@
 
 #include "string_.h"
 
-void printExitIfNullptr(const void *ptr) {
+void printExitIfNullptr(void *ptr) {
     if (ptr == NULL) {
         fprintf(stderr, "bad alloc");
         exit(1);
     }
 }
 
-size_t strlen_(const char *begin) {
+size_t strlen_(char *begin) {
     printExitIfNullptr(begin);
 
     register char *end = begin;
@@ -20,7 +20,7 @@ size_t strlen_(const char *begin) {
     return end - begin;
 }
 
-char *find(const char *begin, const char *const end, const int ch) {
+char *find(char *begin, char *end, int ch) {
     printExitIfNullptr(begin);
 
     while (begin != end && *begin != ch)
@@ -28,7 +28,7 @@ char *find(const char *begin, const char *const end, const int ch) {
     return begin;
 }
 
-char *findNonSpace(const char *begin) {
+char *findNonSpace(char *begin) {
     printExitIfNullptr(begin);
 
     while (*begin++ != '\0')
@@ -37,7 +37,7 @@ char *findNonSpace(const char *begin) {
     return begin;
 }
 
-char *findSpace(const char *begin) {
+char *findSpace(char *begin) {
     printExitIfNullptr(begin);
 
     while (*begin++ != '\0')
@@ -46,7 +46,7 @@ char *findSpace(const char *begin) {
     return begin;
 }
 
-char *findNonSpaceReverse(const char *rbegin, const char *rend) {
+char *findNonSpaceReverse(char *rbegin, char *rend) {
     printExitIfNullptr(rbegin);
 
     while (rbegin-- != rend)
@@ -55,7 +55,7 @@ char *findNonSpaceReverse(const char *rbegin, const char *rend) {
     return rend;
 }
 
-char *findSpaceReverse(const char *rbegin, const char *rend) {
+char *findSpaceReverse(char *rbegin, char *rend) {
     printExitIfNullptr(rbegin);
 
     while (rbegin-- != rend)
@@ -64,7 +64,7 @@ char *findSpaceReverse(const char *rbegin, const char *rend) {
     return rend;
 }
 
-int strcmp_(const char *lhs, const char *rhs) {
+int strcmp__(char *lhs, char *rhs) {
     printExitIfNullptr(lhs);
     printExitIfNullptr(rhs);
 
@@ -77,7 +77,7 @@ int strcmp_(const char *lhs, const char *rhs) {
     return 0;
 }
 
-char *copy(const char *beginSource, const char *endSource, char *beginDestination) {
+char *copy(char *beginSource, char *endSource, char *beginDestination) {
     printExitIfNullptr(beginDestination);
 
     memcpy(beginDestination, beginSource, (beginSource - endSource) * sizeof(char));
@@ -85,7 +85,7 @@ char *copy(const char *beginSource, const char *endSource, char *beginDestinatio
     return beginDestination + 1;
 }
 
-char *copyIf(const char *beginSource, const char *endSource, char *beginDestination, int (*condition)(const int)) {
+char *copyIf(char *beginSource, char *endSource, char *beginDestination, int (*condition)(int)) {
     printExitIfNullptr(beginDestination);
 
     while (beginSource++ != endSource)
@@ -95,7 +95,7 @@ char *copyIf(const char *beginSource, const char *endSource, char *beginDestinat
 }
 
 char *
-copyIfReverse(const char *rbeginSource, const char *rendSource, char *beginDestination, int (*condition)(const int)) {
+copyIfReverse(char *rbeginSource, char *rendSource, char *beginDestination, int (*condition)(int)) {
     printExitIfNullptr(beginDestination);
 
     while (rbeginSource-- != rendSource)
