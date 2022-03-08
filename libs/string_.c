@@ -104,5 +104,14 @@ copyIfReverse(const char *rbeginSource, const char *rendSource, char *beginDesti
     return beginDestination + 1;
 }
 
+bool getWord(char *beginSearch, WordDescriptor *word) {
+    word->begin = findNonSpace(beginSearch);
+    if (*word->begin == '\0')
+        return false;
+    word->end = findSpace(word->begin);
+
+    return true;
+}
+
 
 
