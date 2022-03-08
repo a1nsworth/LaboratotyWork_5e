@@ -68,13 +68,12 @@ int strcmp__(char *lhs, char *rhs) {
     printExitIfNullptr(lhs);
     printExitIfNullptr(rhs);
 
-    for (; *lhs != '\0' || *rhs != '\0'; lhs++, rhs++) {
-        int differenceAddress = lhs - rhs;
-        if (differenceAddress != 0)
-            return differenceAddress;
+    while (*lhs != '\0' && *lhs == *rhs) {
+        lhs++;
+        rhs++;
     }
 
-    return 0;
+    return *lhs - *rhs;
 }
 
 char *copy(char *beginSource, char *endSource, char *beginDestination) {

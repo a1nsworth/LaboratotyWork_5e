@@ -4,6 +4,10 @@
 
 #include "string_tusk.h"
 
+int isNotSpace(const int a) {
+    return !isspace(a);
+}
+
 void removeSpaces(char *s) {
     char *destination = copyIf(s, s + strlen_(s), s, isNotSpace);
     *destination = '\0';
@@ -28,19 +32,19 @@ void removeExtraSpaces(char *s) {
 }
 
 void digitToStart(WordDescriptor word) {
-    char *endStringBuffer = copy(word.begin, word.end,_stringBuffer);
-    char *recPosition = copyIfReverse(endStringBuffer - 1,_stringBuffer - 1,word.begin, isdigit);
-    copyIf(_stringBuffer, endStringBuffer, recPosition, isalpha);
+    char *endStringBuffer = copy(word.begin, word.end,stringBuffer);
+    char *recPosition = copyIfReverse(endStringBuffer - 1,stringBuffer - 1,word.begin, isdigit);
+    copyIf(stringBuffer, endStringBuffer, recPosition, isalpha);
 }
 
 void digitToStartWithoutChangeOrder(WordDescriptor word) {
-    char *endStringBuffer = copy(word.begin, word.end,_stringBuffer);
-    char *recPosition = copyIf(_stringBuffer,endStringBuffer,word.begin, isdigit);
-    copyIf(_stringBuffer, endStringBuffer, recPosition, isalpha);
+    char *endStringBuffer = copy(word.begin, word.end,stringBuffer);
+    char *recPosition = copyIf(stringBuffer,endStringBuffer,word.begin, isdigit);
+    copyIf(stringBuffer, endStringBuffer, recPosition, isalpha);
 }
 
 void replaceDigitsByEqualSpaces(char *s) {
-    char *begin = _stringBuffer;
+    char *begin = stringBuffer;
     char *end = copy(s, getEndOfString(s), begin);
 
     while (begin++ < end) {
@@ -65,8 +69,8 @@ void replace(char *source, char *w1, char *w2) {
         pRead = source;
         pWrite = source;
     } else {
-        *copy(source, getEndOfString(source), _stringBuffer) = '\0';
-        pRead = _stringBuffer;
+        *copy(source, getEndOfString(source), stringBuffer) = '\0';
+        pRead = stringBuffer;
         pWrite = source;
     }
 
@@ -156,7 +160,7 @@ void getAlternatingWordLines(char *s1, char *s2, char *mergeS1S2) {
 void reverseWordsOrder(char *s) {
     char *rbegin = s + strlen_(s) - 1;
     char *rend = s - 1;
-    char *beginDst = _stringBuffer;
+    char *beginDst = stringBuffer;
     WordDescriptor word;
     while (getWordReverse(rend, rbegin, &word)) {
         beginDst = copy(word.begin, word.end, beginDst);
@@ -164,7 +168,7 @@ void reverseWordsOrder(char *s) {
         rbegin = word.begin - 1;
     }
 
-    *copy(_stringBuffer, beginDst - (beginDst != _stringBuffer), s) = '\0';
+    *copy(stringBuffer, beginDst - (beginDst != stringBuffer), s) = '\0';
 }
 
 void digitToStartForEveryWord(char *s) {

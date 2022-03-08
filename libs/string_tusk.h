@@ -7,10 +7,6 @@
 
 #include "string_.h"
 
-bool isNotSpace(const int a) {
-    return !isspace(a);
-}
-
 // Задание 1
 void removeSpaces(char *s);
 
