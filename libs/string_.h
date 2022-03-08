@@ -50,4 +50,6 @@ bool getWord(char *beginSearch, WordDescriptor *word);
 
 bool getWordReverse(char *rbegin, char *rend, WordDescriptor *word);
 
+char *getEndOfString(char *begin);
+
 #endif //LABA5E_STRING__H

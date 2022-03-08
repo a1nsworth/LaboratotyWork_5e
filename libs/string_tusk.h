@@ -50,5 +50,21 @@ void digitToStartWithoutChangeOrder(WordDescriptor word) {
     copyIf(_stringBuffer, endStringBuffer, recPosition, isalpha);
 }
 
+// Задание 4
+void replaceDigitsByEqualSpaces(char *s) {
+    char *begin = _stringBuffer;
+    char *end = copy(s, getEndOfString(s), begin);
+
+    while (begin++ < end) {
+        if (isdigit(*begin)) {
+            int a = *begin - '0';
+            while (a--)
+                *s++ = ' ';
+        } else
+            *s++ = *begin;
+    }
+    *s = '\0';
+}
+
 
 #endif //LABA5E_STRING_TUSK_H

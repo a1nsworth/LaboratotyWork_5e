@@ -122,5 +122,12 @@ bool getWordReverse(char *rbegin, char *rend, WordDescriptor *word) {
     return true;
 }
 
+char *getEndOfString(char *begin) {
+    while (*begin != '\0')
+        begin++;
+
+    return begin;
+}
+
 
 
