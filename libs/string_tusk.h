@@ -36,4 +36,19 @@ void removeExtraSpaces(char *s) {
     *iWrite = '\0';
 }
 
+// Задание 3
+void digitToStart(WordDescriptor word) {
+    char *endStringBuffer = copy(word.begin, word.end,_stringBuffer);
+    char *recPosition = copyIfReverse(endStringBuffer - 1,_stringBuffer - 1,word.begin, isdigit);
+    copyIf(_stringBuffer, endStringBuffer, recPosition, isalpha);
+}
+
+// Задание 3.1
+void digitToStartWithoutChangeOrder(WordDescriptor word) {
+    char *endStringBuffer = copy(word.begin, word.end,_stringBuffer);
+    char *recPosition = copyIf(_stringBuffer,endStringBuffer,word.begin, isdigit);
+    copyIf(_stringBuffer, endStringBuffer, recPosition, isalpha);
+}
+
+
 #endif //LABA5E_STRING_TUSK_H

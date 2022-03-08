@@ -13,6 +13,11 @@
 #include <assert.h>
 #include <stdbool.h>
 
+#define MAX_STRING_SIZE 100
+#define MAX_N_WORDS_IN_STRING 100
+#define MAX_WORD_SIZE 20
+char _stringBuffer [ MAX_STRING_SIZE + 1];
+
 typedef struct WordDescriptor {
     char *begin;
     char *end;
@@ -36,10 +41,10 @@ int strcmp_(const char *lhs, const char *rhs);
 
 char *copy(const char *beginSource, const char *endSource, char *beginDestination);
 
-char *copyIf(const char *beginSource, const char *endSource, char *beginDestination, bool (*condition)(int));
+char *copyIf(const char *beginSource, const char *endSource, char *beginDestination, int (*condition)(int));
 
 char *
-copyIfReverse(const char *rbeginSource, const char *rendSource, char *beginDestination, bool (*condition)(int));
+copyIfReverse(const char *rbeginSource, const char *rendSource, char *beginDestination, int (*condition)(int));
 
 bool getWord(char *beginSearch, WordDescriptor *word);
 
