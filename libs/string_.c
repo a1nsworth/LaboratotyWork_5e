@@ -129,5 +129,24 @@ char *getEndOfString(char *begin) {
     return begin;
 }
 
+char *searchWordInSource(char *source, char *word) {
+    while (*source++ != '\0') {
+        if (!(*source - *word)) {
+            bool isFound = true;
+            char *beginSource = source;
+            char *beginWord = word;
+            while (*beginWord && isFound) {
+                isFound = *beginWord == *beginSource;
+                beginWord++;
+                beginSource++;
+            }
+
+            if (isFound)
+                return source;
+        }
+    }
+    return source;
+}
+
 
 

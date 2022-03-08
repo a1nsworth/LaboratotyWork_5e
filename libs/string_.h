@@ -52,23 +52,18 @@ bool getWordReverse(char *rbegin, char *rend, WordDescriptor *word);
 
 char *getEndOfString(char *begin);
 
-char *searchWordInSource(char *source, char *word) {
-    while (*source++ != '\0') {
-        if (!(*source - *word)) {
-            bool isFound = true;
-            char *beginSource = source;
-            char *beginWord = word;
-            while (*beginWord && isFound) {
-                isFound = *beginWord == *beginSource;
-                beginWord++;
-                beginSource++;
-            }
+char *searchWordInSource(char *source, char *word);
 
-            if (isFound)
-                return source;
-        }
+int areWordsEqual(WordDescriptor w1, WordDescriptor w2) {
+    char *beginW1 = w1.begin;
+    char *beginW2 = w2.begin;
+    while (*beginW1 == *beginW2 && beginW1 != w1.end - 1) {
+        beginW1++;
+        beginW2++;
     }
-    return source;
+
+    return *beginW1 - *beginW2;
 }
+
 
 #endif //LABA5E_STRING__H

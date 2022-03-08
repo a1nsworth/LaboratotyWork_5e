@@ -58,5 +58,22 @@ void replace(char *source, char *w1, char *w2) {
     *pWrite = '\0';
 }
 
+// Задание 6
+bool isWordsOrdered(char *s) {
+    char *begin = s;
+    WordDescriptor currentWord;
+    if (!getWord(begin, &currentWord))
+        return true;
+
+    WordDescriptor lastWord = currentWord;
+    begin = lastWord.end;
+    while (getWord(begin, &currentWord)) {
+        if (areWordsEqual(currentWord, lastWord) < 0)
+            return false;
+        lastWord = currentWord;
+        begin = currentWord.end;
+    }
+    return true;
+}
 
 #endif //LABA5E_STRING_TUSK_H
